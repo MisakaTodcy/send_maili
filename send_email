@@ -1,0 +1,40 @@
+#发送RXJL的邮件
+def send_emial(role_name,item_id_min,item_id_max,ger_id_min,ger_id_max,item_number,diamond,gold):
+    item_email = ''
+    ger_email = ''
+    if item_id_min ==0 and item_id_max == 0:
+        item_email =''
+    elif not item_id_min is None and item_id_max ==0:
+        #表示item_id_min不为0,id_max为0的情况，这里not x is none = not (x is none)
+        for i in range(item_id_min,item_id_min+1):
+            item_send = '{new_item,%s,%s,1,0},'%(i,item_number)
+            #print('iten_send',item_send)
+            item_email = '%s%s'%(item_send,item_email)
+            #print('1',item_email)
+        item_email = item_email[:-1]
+    else :
+        for i in range(item_id_min,item_id_max+1):
+            item_send = '{new_item,%s,%s,1,0},'%(i,item_number)
+            #print('iten_send',item_send)
+            item_email = '%s%s'%(item_send,item_email)
+            #print('1',item_email)
+        item_email = item_email[:-1]
+        #为了去掉最后一个,使用切片，从最后一个开始但是不包含最后一个。
+    print('2',item_email)
+    ############################################-精灵
+    if ger_id_min==0 and ger_id_max==0:
+        ger_email = ''
+    else:
+        for j in range(ger_id_min,ger_id_max+1,10):
+            ger_send = '{new_ger,%s,1,0}'%(j)
+            #ger_final= ger_send.replace("'{","").replace("'}","")
+            ger_email = '%s,%s'%(ger_send,ger_email)
+    ger_email = ger_email[:-1]
+
+    #print("3",ger_email)
+    emial_content = "role_mail_gift:send_gift_nc(18,[%s],{sell_reward,%s,%s,0,0,[%s],0,[%s]},\"神奇奖励\")."%(role_name,diamond,gold,item_email,ger_email)
+    print(emial_content)
+
+######
+#输入参数
+send_emial(role_name="\"cw18015\"",item_id_min = 10932,item_id_max = 10936,ger_id_min = 0,ger_id_max = 0,item_number = 10,diamond=0,gold=0)
